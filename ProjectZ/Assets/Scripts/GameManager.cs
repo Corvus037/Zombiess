@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     public int currentRound = 1;     // Round atual
     public float roundDuration = 60f; // Tempo de cada round em segundos (1 minuto padrão)
     public float roundTimer;        // Contador interno do tempo
+    public bool doublePointsAtivo = false;
+    
 
     void Awake()
     {

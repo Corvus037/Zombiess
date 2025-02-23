@@ -1,32 +1,37 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     // Singleton instance
     public static GameManager Instance { get; private set; }
 
-    // Variáveis do jogador
-    public int playerHealth = 100; 
-    public int points = 500;       
+    [Header("Configurações do Jogador")]
+    public int playerHealth = 100;
+    public int points = 500;
 
-    // Variáveis de round e tempo
-    public int currentRound = 1;     // Round atual
-    public float roundDuration = 60f; // Tempo de cada round em segundos (1 minuto padrão)
-    public float roundTimer;        // Contador interno do tempo
+    [Header("Configurações de Round")]
+    public int currentRound = 1;
+    public float roundDuration = 60f;
+    public  float roundTimer;
     public bool doublePointsAtivo = false;
 
-    public int vidaBaseZumbi = 100; // Vida inicial dos zumbis no round 1
+    [Header("Configurações dos Zumbis")]
+    public int vidaBaseZumbi = 100;
     public int incrementoVidaPorRound = 50;
-    
+
+    [Header("Gerenciamento de Cenas")]
+    public string nomeCenaGameOver = "GameOver";
+    public string nomeCenaPrincipal = "MainScene"; // Nome da sua cena principal
 
     void Awake()
     {
-        // Configura o singleton
+        // Configuração do singleton
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); 
-            roundTimer = roundDuration; // Inicia o timer com o tempo total
+            DontDestroyOnLoad(gameObject);
+            ResetarEstadoDoJogo(); // Reset inicial
         }
         else
         {
@@ -34,53 +39,80 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // Novo método para resetar todos os valores
+    public void ResetarEstadoDoJogo()
+    {
+        playerHealth = 100;
+        points = 500;
+        currentRound = 1;
+        roundTimer = roundDuration;
+        doublePointsAtivo = false;
+    }
+
     void Update()
     {
-        // Atualiza o timer a cada frame
         roundTimer -= Time.deltaTime;
 
-        // Verifica se o tempo acabou
         if (roundTimer <= 0)
         {
             StartNewRound();
         }
     }
 
-    // Método chamado quando o tempo do round acaba
-    private void StartNewRound()
+    void StartNewRound()
     {
-        currentRound++; // Incrementa o round
-        roundTimer = roundDuration; // Reinicia o timer
+        currentRound++;
+        roundTimer = roundDuration;
         Debug.Log($"Round {currentRound} iniciado!");
-
-        // Adicione aqui lógicas extras no início de cada round (ex: spawnar mais inimigos)
     }
 
-    // Método para reduzir a vida do jogador
     public void ReducePlayerHealth(int amount)
     {
         playerHealth -= amount;
+        
         if (playerHealth <= 0)
         {
             playerHealth = 0;
-            Debug.Log("Jogador morreu!");
+            CarregarCenaGameOver();
         }
     }
 
-    // Método para adicionar pontos
+    void CarregarCenaGameOver()
+    {
+        if (!string.IsNullOrEmpty(nomeCenaGameOver))
+        {
+            if (Application.CanStreamedLevelBeLoaded(nomeCenaGameOver))
+            {
+                SceneManager.LoadScene(nomeCenaGameOver);
+            }
+            else
+            {
+                Debug.LogError($"Cena '{nomeCenaGameOver}' não está nas Build Settings!");
+            }
+        }
+        else
+        {
+            Debug.LogError("Nome da cena de game over não definido!");
+        }
+    }
+
+    // Método para reiniciar o jogo completamente
+    public void ReiniciarJogo()
+    {
+        ResetarEstadoDoJogo();
+        SceneManager.LoadScene(nomeCenaPrincipal);
+    }
+
     public void AddPoints(int amount)
     {
         points += amount;
     }
 
-    // Método para remover pontos
     public void RemovePoints(int amount)
     {
-        points -= amount;
-        if (points < 0) points = 0;
+        points = Mathf.Max(points - amount, 0);
     }
 
-    // Método opcional para reiniciar o round manualmente
     public void ResetRoundTimer()
     {
         roundTimer = roundDuration;

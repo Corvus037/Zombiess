@@ -2792,6 +2792,10 @@ MonoBehaviour:
   roundDuration: 60
   roundTimer: 0
   doublePointsAtivo: 0
+  vidaBaseZumbi: 100
+  incrementoVidaPorRound: 50
+  nomeCenaGameOver: GameOverr
+  nomeCenaPrincipal: Game
 --- !u!4 &361701897
 Transform:
   m_ObjectHideFlags: 0
@@ -7180,6 +7184,7 @@ MonoBehaviour:
   - {fileID: 874154147}
   - {fileID: 2044381752}
   - {fileID: 330308412}
+  intervaloDeSpawn: 10
 --- !u!1001 &1217002153
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8696,6 +8701,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Zombie1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4493914613880827488, guid: 6dc4cf4496348884d8ee27743ae38562,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10674,6 +10684,11 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1305936573}
+    - target: {fileID: 5063928811968218212, guid: eadf53637bc5b274b8e1bb4585ca626d,
+        type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 45451c27ed9c4d14394f0f0fe062dda2, type: 2}
     - target: {fileID: 6414405890462876112, guid: eadf53637bc5b274b8e1bb4585ca626d,
         type: 3}
       propertyPath: m_Name

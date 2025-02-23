@@ -18,10 +18,10 @@ public class HUD : MonoBehaviour
         int tempoRestante = Mathf.CeilToInt(GameManager.Instance.roundTimer); // Arredonda para cima
 
         // Atualiza todos os textos
-        textoVida.text = "Vida: " + vida.ToString();
-        textoPontos.text = "Pontos: " + pontos.ToString();
+        textoVida.text = "Life: " + vida.ToString();
+        textoPontos.text = "Points: " + pontos.ToString();
         textoRound.text = "Round: " + round.ToString();
-        textoTempo.text = "Tempo: " + tempoRestante.ToString() + "s"; // Ex: "Tempo: 45s"
+        textoTempo.text = "Time: " + tempoRestante.ToString() + "s"; // Ex: "Tempo: 45s"
     }
 }
 

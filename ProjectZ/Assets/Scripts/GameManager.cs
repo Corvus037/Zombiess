@@ -14,6 +14,9 @@ public class GameManager : MonoBehaviour
     public float roundDuration = 60f; // Tempo de cada round em segundos (1 minuto padrão)
     public float roundTimer;        // Contador interno do tempo
     public bool doublePointsAtivo = false;
+
+    public int vidaBaseZumbi = 100; // Vida inicial dos zumbis no round 1
+    public int incrementoVidaPorRound = 50;
     
 
     void Awake()
